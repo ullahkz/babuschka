@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Horizontal Slider</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .slider-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 20px;
+        padding-bottom: 10px;
+        scrollbar-width: none; /* For Firefox */
+      }
+
+      .slider-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Edge */
+      }
+
+      .card {
+        flex: 0 0 auto;
+        width: 350px;
+        min-height: 400px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex; /* Ensure content stretches */
+        flex-direction: column; /* Arrange items vertically */
+      }
+
+      .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .card-content {
+        flex: 1; /* Fill the remaining height of the card */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Push the link to the bottom */
+        padding: 10px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .card-text {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      .card-link {
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .card-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Modal styles */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: 8px;
+        width: 90%;
+        height: 95%;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .modal iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .modal-close {
+        background-color: white;
+        color: #000;
+        font-size: 24px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-close:hover {
+        background-color: #f0f0f0;
+      }
+
+      .modal-close:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <h1 style="font-size: 50px">Babuschka 2.0</h1>
+      <div style="margin-top: 50px">
+        <p>Sample text line 1</p>
+        <p>Sample text line 2</p>
+      </div>
+      <div class="slider-container" style="margin-top: 100px">
+        <div class="card">
+          <img src="https://placehold.co/200x120" alt="Card Image" />
+          <div class="card-content">
+            <div>
+              <div class="card-title">UMG 800</div>
+              <div class="card-text">
+                Hoch verfügbare Daten – sichere Kommunikation
+              </div>
+            </div>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/umg800/"
+              >Mehr Informationen</a
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://placehold.co/200x120" alt="Card Image" />
+          <div class="card-content">
+            <div>
+              <div class="card-title">UMG 800 LP Module</div>
+              <div class="card-text">
+                Hoch verfügbare Daten – sichere Kommunikation
+              </div>
+            </div>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/umg-800-lp-modul/"
+              >Mehr Informationen</a
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://placehold.co/200x120" alt="Card Image" />
+          <div class="card-content">
+            <div>
+              <div class="card-title">Lastmanagement</div>
+              <div class="card-text">Sample Text</div>
+            </div>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/lastmanagement/"
+              >Mehr Informationen</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal and overlay -->
+    <div id="modal-overlay" class="overlay">
+      <div class="modal">
+        <button id="close-modal" class="modal-close">X</button>
+        <iframe id="iframe-modal" src="" frameborder="0"></iframe>
+      </div>
+    </div>
+
+    <script>
+      // Get the modal, overlay, and close button
+      const modalOverlay = document.getElementById("modal-overlay");
+      const iframeModal = document.getElementById("iframe-modal");
+      const closeModal = document.getElementById("close-modal");
+
+      // Get all the card links
+      const cardLinks = document.querySelectorAll(".card-link");
+
+      // Add click event listener to each card link
+      cardLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault(); // Prevent default link behavior
+          const iframeSrc = link.getAttribute("data-iframe");
+          iframeModal.src = iframeSrc; // Set iframe src to the data-iframe value
+          modalOverlay.style.display = "flex"; // Show the modal
+        });
+      });
+
+      // Close modal when the close button is clicked
+      closeModal.addEventListener("click", () => {
+        modalOverlay.style.display = "none"; // Hide the modal
+        iframeModal.src = ""; // Reset iframe src to stop the video/content
+      });
+
+      // Close modal when clicking outside the modal content
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.style.display = "none"; // Hide the modal
+          iframeModal.src = ""; // Reset iframe src
+        }
+      });
+    </script>
+  </body>
+</html>
