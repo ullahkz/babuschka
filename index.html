@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Horizontal Slider</title>
+    <link rel="icon" href="./favicon-32x32.png" />
+    <title>Babuschka - Touchanwendung</title>
     <style>
       * {
         box-sizing: border-box;
@@ -77,6 +78,63 @@
       .card-link:hover {
         text-decoration: underline;
       }
+
+      /* Modal styles */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: 8px;
+        width: 90%;
+        height: 95%;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .modal iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .modal-close {
+        background-color: white;
+        color: #000;
+        font-size: 24px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-close:hover {
+        background-color: #f0f0f0;
+      }
+
+      .modal-close:focus {
+        outline: none;
+      }
     </style>
   </head>
   <body>
@@ -98,54 +156,94 @@
           <img src="https://placehold.co/200x120" alt="Card Image" />
           <div class="card-content">
             <div>
-              <div class="card-title">Title</div>
-              <div class="card-text">Feature text single or double line</div>
+              <div class="card-title">UMG 800</div>
+              <div class="card-text">
+                Hoch verfügbare Daten – sichere Kommunikation
+              </div>
             </div>
-            <a href="#" class="card-link">Mehr Informationen</a>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/umg800/"
+              >Mehr Informationen</a
+            >
           </div>
         </div>
         <div class="card">
           <img src="https://placehold.co/200x120" alt="Card Image" />
           <div class="card-content">
             <div>
-              <div class="card-title">Title</div>
-              <div class="card-text">Feature text single or double line</div>
+              <div class="card-title">UMG 800 LP Module</div>
+              <div class="card-text">
+                Hoch verfügbare Daten – sichere Kommunikation
+              </div>
             </div>
-            <a href="#" class="card-link">Mehr Informationen</a>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/umg-800-lp-modul/"
+              >Mehr Informationen</a
+            >
           </div>
         </div>
         <div class="card">
           <img src="https://placehold.co/200x120" alt="Card Image" />
           <div class="card-content">
             <div>
-              <div class="card-title">Title</div>
-              <div class="card-text">Feature text single or double line</div>
+              <div class="card-title">Lastmanagement</div>
+              <div class="card-text">Sample Text</div>
             </div>
-            <a href="#" class="card-link">Mehr Informationen</a>
+            <a
+              href="#"
+              class="card-link"
+              data-iframe="https://mm.janitza.de/lastmanagement/"
+              >Mehr Informationen</a
+            >
           </div>
         </div>
-        <div class="card">
-          <img src="https://placehold.co/200x120" alt="Card Image" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">Title</div>
-              <div class="card-text">Feature text single or double line</div>
-            </div>
-            <a href="#" class="card-link">Mehr Informationen</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="https://placehold.co/200x120" alt="Card Image" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">Title</div>
-              <div class="card-text">Feature text single or double line</div>
-            </div>
-            <a href="#" class="card-link">Mehr Informationen</a>
-          </div>
-        </div>
-        <!-- Add more cards dynamically here -->
       </div>
     </div>
+
+    <!-- Modal and overlay -->
+    <div id="modal-overlay" class="overlay">
+      <div class="modal">
+        <button id="close-modal" class="modal-close">X</button>
+        <iframe id="iframe-modal" src="" frameborder="0"></iframe>
+      </div>
+    </div>
+
+    <script>
+      // Get the modal, overlay, and close button
+      const modalOverlay = document.getElementById("modal-overlay");
+      const iframeModal = document.getElementById("iframe-modal");
+      const closeModal = document.getElementById("close-modal");
+
+      // Get all the card links
+      const cardLinks = document.querySelectorAll(".card-link");
+
+      // Add click event listener to each card link
+      cardLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault(); // Prevent default link behavior
+          const iframeSrc = link.getAttribute("data-iframe");
+          iframeModal.src = iframeSrc; // Set iframe src to the data-iframe value
+          modalOverlay.style.display = "flex"; // Show the modal
+        });
+      });
+
+      // Close modal when the close button is clicked
+      closeModal.addEventListener("click", () => {
+        modalOverlay.style.display = "none"; // Hide the modal
+        iframeModal.src = ""; // Reset iframe src to stop the video/content
+      });
+
+      // Close modal when clicking outside the modal content
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.style.display = "none"; // Hide the modal
+          iframeModal.src = ""; // Reset iframe src
+        }
+      });
+    </script>
   </body>
 </html>
