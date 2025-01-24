@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./favicon-32x32.png" />
     <title>Babuschka - Touchanwendung</title>
+
     <style>
       * {
         box-sizing: border-box;
@@ -12,11 +13,19 @@
         padding: 0;
       }
 
+      @font-face {
+        font-family: "Janitza";
+        src: url("./fonts/janitza_font_1.woff2") format("woff2"),
+          url("./fonts/janitza_font_2.woff2") format("woff2");
+      }
+
       body {
         width: 100vw;
         height: 100vh;
         font-family: Arial, sans-serif;
+
         padding: 20px;
+        color: #000;
         background-color: #f5f7f7;
         background-image: radial-gradient(
           farthest-side at bottom left,
@@ -39,23 +48,35 @@
         display: none; /* For Chrome, Safari, and Edge */
       }
 
+      .card-link-wrapper {
+        display: block;
+        text-decoration: none;
+      }
+
+      .card-link-wrapper > p {
+        color: #5c5b5b;
+        font-weight: 100;
+      }
+
       .card {
         flex: 0 0 auto;
         width: 450px;
         min-height: 500px;
         background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        border: 1px solid rgba(0 0 0 / 0.12);
+        border-radius: 6px;
         overflow: hidden;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         display: flex; /* Ensure content stretches */
         flex-direction: column; /* Arrange items vertically */
+        cursor: pointer;
       }
 
       .card img {
         width: 100%;
         height: auto;
         object-fit: cover;
+        pointer-events: none; /* Prevents interfering with image clicks */
       }
 
       .card-content {
@@ -63,29 +84,38 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between; /* Push the link to the bottom */
-        padding: 10px;
+        padding: 20px;
+        pointer-events: none; /* Prevents interfering with content clicks */
       }
 
       .card-title {
         font-size: 18px;
         font-weight: bold;
         margin-bottom: 5px;
+        color: #000;
       }
 
       .card-text {
-        font-size: 14px;
+        font-size: 16px;
         color: #555;
         margin-bottom: 10px;
       }
 
       .card-link {
         font-size: 14px;
-        color: #007bff;
         text-decoration: none;
+        color: #1488c9;
       }
 
       .card-link:hover {
-        text-decoration: underline;
+        text-decoration: none;
+      }
+
+      .card-link:focus,
+      .card-link:active,
+      .card-link:visited {
+        color: #000;
+        outline: none;
       }
 
       /* Modal styles */
@@ -162,55 +192,58 @@
         <p>Sample text line 2</p>
       </div>
       <div class="slider-container" style="margin-top: 100px">
-        <div class="card">
-          <img src="https://placehold.co/200x120" alt="Card Image" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">UMG 800</div>
-              <div class="card-text">
-                Hoch verfügbare Daten – sichere Kommunikation
+        <a
+          href="#"
+          class="card-link-wrapper"
+          data-iframe="https://mm.janitza.de/umg800/"
+        >
+          <div class="card">
+            <img src="https://placehold.co/200x120" alt="Card Image" />
+            <div class="card-content">
+              <div>
+                <div class="card-title">UMG 800</div>
+                <div class="card-text">
+                  Hoch verfügbare Daten – sichere Kommunikation
+                </div>
               </div>
+              <div class="card-link">Mehr Informationen</div>
             </div>
-            <a
-              href="#"
-              class="card-link"
-              data-iframe="https://mm.janitza.de/umg800/"
-              >Mehr Informationen</a
-            >
           </div>
-        </div>
-        <div class="card">
-          <img src="https://placehold.co/200x120" alt="Card Image" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">UMG 800 LP Module</div>
-              <div class="card-text">
-                Hoch verfügbare Daten – sichere Kommunikation
+        </a>
+        <a
+          href="#"
+          class="card-link-wrapper"
+          data-iframe="https://mm.janitza.de/umg-800-lp-modul/"
+        >
+          <div class="card">
+            <img src="https://placehold.co/200x120" alt="Card Image" />
+            <div class="card-content">
+              <div>
+                <div class="card-title">UMG 800 LP Module</div>
+                <div class="card-text">
+                  Hoch verfügbare Daten – sichere Kommunikation
+                </div>
               </div>
+              <div class="card-link">Mehr Informationen</div>
             </div>
-            <a
-              href="#"
-              class="card-link"
-              data-iframe="https://mm.janitza.de/umg-800-lp-modul/"
-              >Mehr Informationen</a
-            >
           </div>
-        </div>
-        <div class="card">
-          <img src="https://placehold.co/200x120" alt="Card Image" />
-          <div class="card-content">
-            <div>
-              <div class="card-title">Lastmanagement</div>
-              <div class="card-text">Sample Text</div>
+        </a>
+        <a
+          href="#"
+          class="card-link-wrapper"
+          data-iframe="https://mm.janitza.de/lastmanagement/"
+        >
+          <div class="card">
+            <img src="https://placehold.co/200x120" alt="Card Image" />
+            <div class="card-content">
+              <div>
+                <div class="card-title">Lastmanagement</div>
+                <div class="card-text">Sample Text</div>
+              </div>
+              <div class="card-link">Mehr Informationen</div>
             </div>
-            <a
-              href="#"
-              class="card-link"
-              data-iframe="https://mm.janitza.de/lastmanagement/"
-              >Mehr Informationen</a
-            >
           </div>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -231,7 +264,7 @@
       const closeModal = document.getElementById("close-modal");
 
       // Get all the card links
-      const cardLinks = document.querySelectorAll(".card-link");
+      const cardLinks = document.querySelectorAll(".card-link-wrapper");
 
       // Add click event listener to each card link
       cardLinks.forEach((link) => {
