@@ -17,6 +17,12 @@
         height: 100vh;
         font-family: Arial, sans-serif;
         padding: 20px;
+        background-color: #f5f7f7;
+        background-image: radial-gradient(
+          farthest-side at bottom left,
+          rgba(20, 136, 201, 0.08) 0%,
+          rgba(20, 136, 201, 0) 100%
+        );
       }
 
       .slider-container {
@@ -26,16 +32,6 @@
         gap: 20px;
         padding-bottom: 10px;
         scrollbar-width: none; /* For Firefox */
-        background-image: radial-gradient(
-            33.125vw 33.125vw at 25% 103%,
-            rgba(20, 136, 201, 0.08) 0%,
-            rgba(20, 136, 201, 0) 100%
-          ),
-          radial-gradient(
-            36.75vw 36.75vw at 6.75% 92%,
-            rgba(20, 136, 201, 0.08) 0%,
-            rgba(20, 136, 201, 0) 100%
-          );
       }
 
       .slider-container::-webkit-scrollbar {
